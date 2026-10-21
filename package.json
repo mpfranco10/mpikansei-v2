@@ -1,0 +1,29 @@
+{
+  "name": "mpikansei",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "check": "astro check",
+    "test": "tsx --test tests/*.test.ts",
+    "test:e2e": "playwright test",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^7.4.1",
+    "chart.js": "^4.5.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.20.6",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=22.22.0"
+  }
+}

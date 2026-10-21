@@ -1,0 +1,402 @@
+[
+  {
+    "id": "q1",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q2",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q3",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q4",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q5",
+    "trait": "L",
+    "key": "Yes"
+  },
+  {
+    "id": "q6",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q7",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q8",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q9",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q10",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q11",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q12",
+    "trait": "L",
+    "key": "Yes"
+  },
+  {
+    "id": "q13",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q14",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q15",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q16",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q17",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q18",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q19",
+    "trait": "L",
+    "key": "Yes"
+  },
+  {
+    "id": "q20",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q21",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q22",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q23",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q24",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q25",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q26",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q27",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q28",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q29",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q30",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q31",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q32",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q33",
+    "trait": "L",
+    "key": "Yes"
+  },
+  {
+    "id": "q34",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q35",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q36",
+    "trait": "L",
+    "key": "Yes"
+  },
+  {
+    "id": "q37",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q38",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q39",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q40",
+    "trait": "L",
+    "key": "Yes"
+  },
+  {
+    "id": "q41",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q42",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q43",
+    "trait": "L",
+    "key": "Yes"
+  },
+  {
+    "id": "q44",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q45",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q46",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q47",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q48",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q49",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q50",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q51",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q52",
+    "trait": "L",
+    "key": "Yes"
+  },
+  {
+    "id": "q53",
+    "trait": "N",
+    "key": "No"
+  },
+  {
+    "id": "q54",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q55",
+    "trait": "L",
+    "key": "Yes"
+  },
+  {
+    "id": "q56",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q57",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q58",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q59",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q60",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q61",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q62",
+    "trait": "L",
+    "key": "Yes"
+  },
+  {
+    "id": "q63",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q64",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q65",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q66",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q67",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q68",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q69",
+    "trait": "E",
+    "key": "No"
+  },
+  {
+    "id": "q70",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q71",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q72",
+    "trait": "L",
+    "key": "Yes"
+  },
+  {
+    "id": "q73",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q74",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q75",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q76",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q77",
+    "trait": "L",
+    "key": "Yes"
+  },
+  {
+    "id": "q78",
+    "trait": "N",
+    "key": "Yes"
+  },
+  {
+    "id": "q79",
+    "trait": "E",
+    "key": "Yes"
+  },
+  {
+    "id": "q80",
+    "trait": "E",
+    "key": "Yes"
+  }
+]

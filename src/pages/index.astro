@@ -1,0 +1,54 @@
+---
+import { translations } from '../i18n/translations';
+import '../styles/global.css';
+const t = translations.en;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{t.page.title}</title>
+  </head>
+  <body>
+    <main id="container">
+      <header class="introduction">
+        <h1 id="mainTitle">{t.page.heading}</h1>
+        <section
+          id="description"
+          tabindex="0"
+          aria-labelledby="mainTitle"
+          set:html={t.description}
+        />
+        <aside id="note" set:html={t.note} />
+      </header>
+      <form id="quizForm" hidden>
+        <div class="progress-header"><span id="questionCount" aria-live="polite"></span></div>
+        <progress id="progress" max="80" value="0" aria-labelledby="questionCount"></progress>
+        <fieldset class="question-card">
+          <legend id="questionLabel" tabindex="-1"></legend>
+          <div class="pane">
+            <label class="option"><input type="radio" value="Yes" /><span id="yesLabel">{t.yes}</span></label>
+            <label class="option"><input type="radio" value="DK" /><span id="dkLabel">{t.dk}</span></label>
+            <label class="option"><input type="radio" value="No" /><span id="noLabel">{t.no}</span></label>
+          </div>
+        </fieldset>
+        <div class="nav">
+          <button type="button" id="prevBtn">{t.buttons.prev}</button>
+          <button type="button" id="nextBtn">{t.buttons.next}</button>
+          <button type="submit" id="submitBtn" hidden disabled>{t.buttons.submit}</button>
+        </div>
+      </form>
+      <section id="results" tabindex="-1" aria-live="polite" hidden></section>
+      <section id="plotContainer" hidden>
+        <h2 id="plotTitle">{t.page.plot}</h2>
+        <div class="canvas-wrapper"><canvas id="scoreChart" role="img" aria-describedby="results"></canvas></div>
+        <div class="chart-actions">
+          <button type="button" id="downloadChartBtn">{t.buttons.downloadChart}</button>
+        </div>
+      </section>
+      <noscript><p>JavaScript is required to complete this questionnaire. / 回答にはJavaScriptが必要です。</p></noscript>
+    </main>
+    <script>import '../scripts/quiz';</script>
+  </body>
+</html>
