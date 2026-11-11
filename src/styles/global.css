@@ -161,30 +161,18 @@ progress::-webkit-progress-bar {
 progress::-webkit-progress-value {
   background: var(--purple);
   border-radius: 8px;
+  transition: width 300ms ease-out;
 }
 progress::-moz-progress-bar {
   background: var(--purple);
   border-radius: 8px;
+  transition: width 300ms ease-out;
 }
 .question-card {
   min-width: 0;
   margin: 0;
   padding: 0;
   border: 0;
-}
-
-@keyframes question-enter {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-#questionLabel.question-enter {
-  animation: question-enter 220ms ease-in-out both;
 }
 
 legend {

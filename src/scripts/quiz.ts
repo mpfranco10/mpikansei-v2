@@ -92,15 +92,6 @@ function initializeQuiz() {
     submitButton.hidden = !isLastQuestion;
     submitButton.disabled = !allAnswered(questions, answers);
 
-    // Animate only the question text
-    if (focus) {
-      questionLabel.classList.remove("question-enter");
-      void questionLabel.offsetWidth;
-      questionLabel.classList.add("question-enter");
-
-      questionLabel.focus({ preventScroll: true });
-    }
-
     if (focus) {
       questionLabel.focus({ preventScroll: true });
     }
