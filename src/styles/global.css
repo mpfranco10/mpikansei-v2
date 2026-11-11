@@ -218,6 +218,11 @@ legend {
 }
 
 /* Answer options */
+.option,
+.option input,
+.option span {
+  -webkit-tap-highlight-color: transparent;
+}
 
 .option {
   position: relative;
