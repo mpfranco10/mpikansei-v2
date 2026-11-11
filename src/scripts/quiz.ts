@@ -4,12 +4,12 @@ import { allAnswered, scoreAnswers } from "../utils/scoring";
 import { downloadChart, plotScores } from "./chart";
 
 import type { Answer, Answers, Scores } from "../types/quiz";
+
 type HTMLElementConstructor<T extends HTMLElement> = new () => T;
 
-/**
- * Gets an element by ID and checks that it is the expected HTML element type.
- * Throws an error immediately if the quiz HTML and script are out of sync.
- */
+const AUTO_ADVANCE_DELAY = 180;
+const SCORE_MAXIMUMS = { E: 48, N: 48, L: 40 } as const;
+const VALID_ANSWERS: readonly string[] = ["Yes", "DK", "No"];
 
 function getElement<T extends HTMLElement>(
   id: string,
@@ -24,104 +24,62 @@ function getElement<T extends HTMLElement>(
   return element;
 }
 
-/**
- * Maximum possible score for each MPI scale.
- *
- * E: 24 scored questions × 2 = 48
- * N: 24 scored questions × 2 = 48
- * L: 20 scored questions × 2 = 40
- *
- * Buffer questions do not contribute to any score.
- */
-const SCORE_MAXIMUMS = {
-  E: 48,
-  N: 48,
-  L: 40,
-} as const;
-
-/**
- * Initializes and controls the MPI questionnaire.
- */
 function initializeQuiz() {
-  // --------------------------------------------------
-  // Language
-  // --------------------------------------------------
-
   const language = detectLanguage(navigator.language);
   const t = translations[language];
 
   document.documentElement.lang = language;
   document.title = t.page.title;
 
-  // --------------------------------------------------
-  // DOM elements
-  // --------------------------------------------------
-
   const form = getElement("quizForm", HTMLFormElement);
   const note = getElement("note", HTMLElement);
   const description = getElement("description", HTMLElement);
-
   const previousButton = getElement("prevBtn", HTMLButtonElement);
   const nextButton = getElement("nextBtn", HTMLButtonElement);
   const submitButton = getElement("submitBtn", HTMLButtonElement);
-
   const questionLabel = getElement("questionLabel", HTMLElement);
   const questionCount = getElement("questionCount", HTMLElement);
   const progress = getElement("progress", HTMLProgressElement);
-
   const results = getElement("results", HTMLElement);
   const plotContainer = getElement("plotContainer", HTMLElement);
   const canvas = getElement("scoreChart", HTMLCanvasElement);
   const downloadButton = getElement("downloadChartBtn", HTMLButtonElement);
-  downloadButton.textContent = t.buttons.downloadChart;
-
   const inputs = [
     ...form.querySelectorAll<HTMLInputElement>('input[type="radio"]'),
   ];
 
-  // --------------------------------------------------
   // Static translated content
-  // --------------------------------------------------
-
   getElement("mainTitle", HTMLElement).textContent = t.page.heading;
   description.innerHTML = t.description;
   note.innerHTML = t.note;
   getElement("plotTitle", HTMLElement).textContent = t.page.plot;
-
   previousButton.textContent = t.buttons.prev;
   nextButton.textContent = t.buttons.next;
   submitButton.textContent = t.buttons.submit;
-
+  downloadButton.textContent = t.buttons.downloadChart;
   getElement("yesLabel", HTMLElement).textContent = t.yes;
   getElement("dkLabel", HTMLElement).textContent = t.dk;
   getElement("noLabel", HTMLElement).textContent = t.no;
 
-  // --------------------------------------------------
-  // Quiz state
-  // --------------------------------------------------
-
   const answers: Answers = {};
-
   let currentIndex = 0;
   let finished = false;
+  let autoAdvanceTimer: ReturnType<typeof setTimeout> | undefined;
 
-  // --------------------------------------------------
-  // Rendering
-  // --------------------------------------------------
+  function cancelAutoAdvance() {
+    if (autoAdvanceTimer !== undefined) {
+      clearTimeout(autoAdvanceTimer);
+      autoAdvanceTimer = undefined;
+    }
+  }
 
-  /**
-   * Updates the UI to display the current question and its saved answer.
-   */
   function renderQuestion(focus = true) {
     const question = questions[currentIndex];
 
     questionLabel.textContent = t.questions[question.id];
     questionCount.textContent = `${currentIndex + 1} / ${questions.length}`;
-
-    // Number of questions already answered.
     progress.value = Object.keys(answers).length;
 
-    // Restore the selected answer when navigating backwards.
     for (const input of inputs) {
       input.name = question.id;
       input.checked = answers[question.id] === input.value;
@@ -130,21 +88,24 @@ function initializeQuiz() {
     previousButton.disabled = currentIndex === 0;
 
     const isLastQuestion = currentIndex === questions.length - 1;
-
     nextButton.hidden = isLastQuestion;
     submitButton.hidden = !isLastQuestion;
-
-    // Submission is only possible after all 80 questions are answered.
     submitButton.disabled = !allAnswered(questions, answers);
+
+    // Animate only the question text
+    if (focus) {
+      questionLabel.classList.remove("question-enter");
+      void questionLabel.offsetWidth;
+      questionLabel.classList.add("question-enter");
+
+      questionLabel.focus({ preventScroll: true });
+    }
 
     if (focus) {
       questionLabel.focus({ preventScroll: true });
     }
   }
 
-  /**
-   * Displays the final E, N and L scores.
-   */
   function renderResults(scores: Scores) {
     results.replaceChildren();
 
@@ -154,89 +115,82 @@ function initializeQuiz() {
       ["L", t.results.l, SCORE_MAXIMUMS.L],
     ] as const;
 
-    for (const [trait, text, maximum] of scoreRows) {
+    for (const [trait, label, maximum] of scoreRows) {
       const paragraph = document.createElement("p");
       const heading = document.createElement("strong");
-
-      heading.textContent = `${text}:`;
-
+      heading.textContent = `${label}:`;
       paragraph.append(heading, ` ${scores[trait]} / ${maximum}`);
-
       results.append(paragraph);
     }
 
     results.hidden = false;
   }
 
-  // --------------------------------------------------
-  // Navigation
-  // --------------------------------------------------
+  function goToQuestion(index: number) {
+    cancelAutoAdvance();
+    currentIndex = index;
+    renderQuestion();
+  }
 
   previousButton.addEventListener("click", () => {
-    if (finished || currentIndex === 0) {
-      return;
-    }
-
-    currentIndex--;
-    renderQuestion();
+    if (finished) return;
+    if (currentIndex > 0) goToQuestion(currentIndex - 1);
+    else cancelAutoAdvance();
   });
 
   nextButton.addEventListener("click", () => {
-    if (finished) {
-      return;
-    }
+    if (finished) return;
 
-    const currentQuestion = questions[currentIndex];
+    // A manual navigation action replaces any pending automatic advance.
+    cancelAutoAdvance();
 
-    if (!answers[currentQuestion.id]) {
+    if (!answers[questions[currentIndex].id]) {
       alert(t.alerts.selectAnswer);
       return;
     }
 
     if (currentIndex < questions.length - 1) {
-      currentIndex++;
-      renderQuestion();
+      goToQuestion(currentIndex + 1);
     }
   });
-
-  // --------------------------------------------------
-  // Answer selection
-  // --------------------------------------------------
 
   form.addEventListener("change", (event) => {
-    if (finished || !(event.target instanceof HTMLInputElement)) {
+    if (
+      finished ||
+      !(event.target instanceof HTMLInputElement) ||
+      event.target.type !== "radio" ||
+      !form.contains(event.target) ||
+      !VALID_ANSWERS.includes(event.target.value)
+    ) {
       return;
     }
 
-    const value = event.target.value;
+    const question = questions[currentIndex];
+    answers[question.id] = event.target.value as Answer;
 
-    // Ignore unexpected radio values.
-    if (!["Yes", "DK", "No"].includes(value)) {
-      return;
-    }
+    // Keep the selected radio visible during the delay.
+    // Do not renderQuestion() here: it would immediately replace the state.
+    progress.value = Object.keys(answers).length;
+    submitButton.disabled = !allAnswered(questions, answers);
 
-    const currentQuestion = questions[currentIndex];
+    cancelAutoAdvance();
 
-    answers[currentQuestion.id] = value as Answer;
-
-    // Automatically continue to the next question after answering.
     if (currentIndex < questions.length - 1) {
-      currentIndex++;
+      const answeredIndex = currentIndex;
+      autoAdvanceTimer = setTimeout(() => {
+        autoAdvanceTimer = undefined;
+        if (!finished && currentIndex === answeredIndex) {
+          goToQuestion(answeredIndex + 1);
+        }
+      }, AUTO_ADVANCE_DELAY);
     }
-
-    renderQuestion();
   });
-
-  // --------------------------------------------------
-  // Submission
-  // --------------------------------------------------
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
+    if (finished) return;
 
-    if (finished) {
-      return;
-    }
+    cancelAutoAdvance();
 
     if (!allAnswered(questions, answers)) {
       alert(t.alerts.completeAll);
@@ -244,16 +198,12 @@ function initializeQuiz() {
     }
 
     const scores = scoreAnswers(questions, answers);
-
     finished = true;
     form.hidden = true;
     note.hidden = true;
     description.hidden = true;
 
-    // Display numerical results.
     renderResults(scores);
-
-    // Display the E/N personality plot.
     plotContainer.hidden = false;
 
     canvas.setAttribute(
@@ -263,13 +213,8 @@ function initializeQuiz() {
 
     const chart = plotScores(canvas, scores.E, scores.N, t);
     downloadButton.addEventListener("click", () => downloadChart(chart));
-
     results.focus();
   });
-
-  // --------------------------------------------------
-  // Start quiz
-  // --------------------------------------------------
 
   form.hidden = false;
   renderQuestion(false);
