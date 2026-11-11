@@ -58,6 +58,8 @@ function initializeQuiz() {
   // --------------------------------------------------
 
   const form = getElement("quizForm", HTMLFormElement);
+  const note = getElement("note", HTMLElement);
+  const description = getElement("description", HTMLElement);
 
   const previousButton = getElement("prevBtn", HTMLButtonElement);
   const nextButton = getElement("nextBtn", HTMLButtonElement);
@@ -82,8 +84,8 @@ function initializeQuiz() {
   // --------------------------------------------------
 
   getElement("mainTitle", HTMLElement).textContent = t.page.heading;
-  getElement("description", HTMLElement).innerHTML = t.description;
-  getElement("note", HTMLElement).innerHTML = t.note;
+  description.innerHTML = t.description;
+  note.innerHTML = t.note;
   getElement("plotTitle", HTMLElement).textContent = t.page.plot;
 
   previousButton.textContent = t.buttons.prev;
@@ -245,6 +247,8 @@ function initializeQuiz() {
 
     finished = true;
     form.hidden = true;
+    note.hidden = true;
+    description.hidden = true;
 
     // Display numerical results.
     renderResults(scores);

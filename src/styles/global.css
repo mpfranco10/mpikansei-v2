@@ -11,6 +11,7 @@
   --page: #f7f6f9;
   --surface: #fff;
   --radius: 16px;
+
   font-family:
     system-ui,
     -apple-system,
@@ -26,23 +27,46 @@
 * {
   box-sizing: border-box;
 }
+
 [hidden] {
   display: none !important;
 }
+
+/* Page layout */
+
+html {
+  min-height: 100%;
+}
+
 body {
   margin: 0;
   padding: clamp(24px, 5vw, 56px) 24px 56px;
+
+  height: 100vh;
+  height: 100dvh;
+
+  display: flex;
+  flex-direction: column;
 }
+
 #container {
   width: 100%;
   max-width: 760px;
   margin-inline: auto;
+
+  flex: 1;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
 }
+
 h1,
 h2,
 p {
   margin: 0;
 }
+
 h1 {
   max-width: 680px;
   margin-bottom: 20px;
@@ -53,21 +77,34 @@ h1 {
   letter-spacing: -0.025em;
   text-wrap: balance;
 }
+
 h2 {
   font-size: 1.2rem;
   font-weight: 650;
   color: var(--purple-dark);
 }
+
 strong {
   font-weight: 650;
 }
+
+/* Introduction */
+
 .introduction {
+  display: flex;
+  flex-direction: column;
+
+  flex: 1;
+  min-height: 0;
   margin-bottom: 28px;
 }
+
 #description {
-  max-height: 180px;
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
+
   padding: 0 16px 0 20px;
   border-left: 3px solid var(--purple-line);
   color: var(--muted);
@@ -76,13 +113,17 @@ strong {
   scrollbar-width: thin;
   scrollbar-color: var(--purple-line) transparent;
 }
+
 #description p + p {
   margin-top: 12px;
 }
+
 #description strong {
   color: var(--ink);
 }
+
 #note {
+  flex-shrink: 0;
   margin-top: 18px;
   padding: 12px 16px;
   border: 1px solid var(--purple-line);
@@ -92,17 +133,25 @@ strong {
   font-size: 0.875rem;
   line-height: 1.7;
 }
+
+/* Quiz form */
+
 #quizForm {
   padding: clamp(24px, 4vw, 36px);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
   box-shadow: 0 8px 32px #29243306;
+
+  margin-top: auto;
+  flex-shrink: 0;
 }
+
 .progress-header {
   display: flex;
   margin-bottom: 10px;
 }
+
 #questionCount {
   padding: 3px 11px;
   border-radius: 6px;
@@ -113,6 +162,7 @@ strong {
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.04em;
 }
+
 progress {
   display: block;
   width: 100%;
@@ -124,24 +174,29 @@ progress {
   background: var(--purple-soft);
   accent-color: var(--purple);
 }
+
 progress::-webkit-progress-bar {
   background: var(--purple-soft);
   border-radius: 8px;
 }
+
 progress::-webkit-progress-value {
   background: var(--purple);
   border-radius: 8px;
 }
+
 progress::-moz-progress-bar {
   background: var(--purple);
   border-radius: 8px;
 }
+
 .question-card {
   min-width: 0;
   margin: 0;
   padding: 0;
   border: 0;
 }
+
 legend {
   float: left;
   width: 100%;
@@ -154,17 +209,22 @@ legend {
   overflow-wrap: anywhere;
   line-break: strict;
 }
+
 .pane {
   clear: both;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
+
+/* Answer options */
+
 .option {
   position: relative;
   min-width: 0;
   cursor: pointer;
 }
+
 .option input {
   position: absolute;
   inset: 0;
@@ -175,6 +235,7 @@ legend {
   opacity: 0;
   cursor: pointer;
 }
+
 .option span {
   display: flex;
   align-items: center;
@@ -188,11 +249,13 @@ legend {
   color: var(--purple-dark);
   font-size: 1rem;
   font-weight: 600;
+
   transition:
     background-color 0.15s ease,
     border-color 0.15s ease,
     box-shadow 0.15s ease;
 }
+
 .option span::before {
   content: "";
   flex: 0 0 17px;
@@ -202,34 +265,47 @@ legend {
   border-radius: 50%;
   background: var(--surface);
 }
+
 .option input:checked + span {
   border-color: var(--purple);
   background: var(--purple-soft);
   box-shadow: inset 0 0 0 1px var(--purple);
 }
+
 .option input:checked + span::before {
-  border: 5px solid var(--purple);
+  background-color: var(--purple);
+  border-color: var(--purple);
 }
+
 .option input:active + span {
   background: var(--purple-soft);
   border-color: var(--purple);
 }
+
+/* Accessibility */
+
 :focus-visible {
   outline: 3px solid var(--purple);
   outline-offset: 4px;
 }
+
 .option input:focus-visible + span {
   outline: 3px solid var(--purple);
   outline-offset: 4px;
 }
+
 #questionLabel:focus {
   outline: none;
 }
+
 #questionLabel:focus-visible {
   outline: 2px solid var(--purple-line);
   outline-offset: 4px;
   border-radius: 4px;
 }
+
+/* Navigation */
+
 .nav {
   display: flex;
   justify-content: space-between;
@@ -238,6 +314,7 @@ legend {
   padding-top: 22px;
   border-top: 1px solid var(--line);
 }
+
 button {
   min-height: 46px;
   padding: 10px 22px;
@@ -250,15 +327,18 @@ button {
   font-weight: 600;
   line-height: 1.5;
   cursor: pointer;
+
   transition:
     background-color 0.15s ease,
     border-color 0.15s ease;
 }
+
 #prevBtn {
   border-color: var(--line);
   background: var(--surface);
   color: var(--muted);
 }
+
 button:disabled,
 #prevBtn:disabled {
   border-color: var(--line);
@@ -266,18 +346,24 @@ button:disabled,
   color: var(--muted);
   cursor: not-allowed;
 }
+
 button:not(:disabled):active {
   background: var(--purple-dark);
 }
+
 #prevBtn:not(:disabled):active {
   background: var(--purple-soft);
 }
+
+/* Results */
+
 #results {
   padding: 8px clamp(20px, 4vw, 32px);
   border: 1px solid var(--purple-line);
   border-radius: var(--radius);
   background: var(--surface);
 }
+
 #results p {
   display: flex;
   align-items: baseline;
@@ -289,15 +375,20 @@ button:not(:disabled):active {
   font-weight: 650;
   font-variant-numeric: tabular-nums;
 }
+
 #results p + p {
   border-top: 1px solid var(--line);
 }
+
 #results strong {
   flex: 1;
   color: var(--muted);
   font-size: 0.925rem;
   font-weight: 500;
 }
+
+/* Score chart */
+
 #plotContainer {
   margin-top: 24px;
   padding: clamp(16px, 4vw, 32px);
@@ -305,9 +396,11 @@ button:not(:disabled):active {
   border-radius: var(--radius);
   background: var(--surface);
 }
+
 #plotTitle {
   margin-bottom: 24px;
 }
+
 .canvas-wrapper {
   position: relative;
   width: 100%;
@@ -316,104 +409,169 @@ button:not(:disabled):active {
   aspect-ratio: 1 / 1;
   margin-inline: auto;
 }
+
 .canvas-wrapper canvas {
   position: absolute;
   inset: 0;
   display: block;
   max-width: 100%;
 }
+
 .chart-actions {
   display: flex;
   justify-content: center;
-  margin-top: 24px;
+  margin-top: 3rem;
 }
 
 noscript p {
   margin-block: 24px;
 }
 
+/* Hover interactions */
+
 @media (hover: hover) {
   .option input:not(:checked):hover + span {
     border-color: var(--purple);
     background: var(--purple-soft);
   }
+
   button:not(:disabled):hover {
     background: var(--purple-dark);
     border-color: var(--purple-dark);
   }
+
   #prevBtn:not(:disabled):hover {
     background: var(--purple-soft);
     color: var(--purple-dark);
     border-color: var(--purple-line);
   }
 }
+
+/* Mobile */
+
 @media (max-width: 600px) {
   body {
     padding: 24px 16px 32px;
   }
+
   h1 {
     margin-bottom: 16px;
   }
+
   .introduction {
     margin-bottom: 20px;
   }
+
   #description {
-    max-height: 130px;
     padding-left: 14px;
     font-size: 0.875rem;
     line-height: 1.75;
   }
+
   #note {
     margin-top: 14px;
     padding: 10px 12px;
     font-size: 0.8125rem;
   }
+
   #quizForm {
     padding: 20px 16px;
   }
+
   progress {
     margin-bottom: 22px;
   }
+
   legend {
     min-height: 110px;
     padding-bottom: 22px;
   }
+
   .pane {
     gap: 8px;
   }
+
   .option span {
     min-height: 56px;
     gap: 6px;
     padding-inline: 4px;
     font-size: 0.925rem;
   }
+
   .option span::before {
     flex-basis: 15px;
     width: 15px;
     height: 15px;
   }
-  .option input:checked + span::before {
-    border-width: 4px;
-  }
+
   .nav {
     margin-top: 22px;
     padding-top: 18px;
   }
+
   button {
     padding-inline: 18px;
   }
+
   #results p {
     gap: 12px;
     padding-block: 16px;
   }
+
   #results strong {
     max-width: 65%;
     font-size: 0.85rem;
   }
+
   #plotTitle {
     margin-bottom: 16px;
   }
 }
+
+/* Short screens: allow page scrolling instead of clipping controls */
+
+@media (max-height: 650px) {
+  body {
+    height: auto;
+    min-height: 100dvh;
+  }
+
+  #container {
+    flex: none;
+  }
+
+  .introduction {
+    flex: none;
+  }
+
+  #description {
+    flex: none;
+    max-height: 180px;
+  }
+}
+
+/* Results mode: let the full chart scroll naturally */
+
+body:has(#results:not([hidden])) {
+  height: auto;
+  min-height: 100dvh;
+}
+
+body:has(#results:not([hidden])) #container {
+  flex: none;
+}
+
+body:has(#results:not([hidden])) .introduction {
+  flex: none;
+}
+
+body:has(#results:not([hidden])) #description {
+  flex: none;
+  max-height: 240px;
+}
+
+/* Reduced motion */
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
